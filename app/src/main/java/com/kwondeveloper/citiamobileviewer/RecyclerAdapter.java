@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -33,6 +34,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public ViewHolder(View itemView) {
             super(itemView);
             widget = (WebView) itemView.findViewById(R.id.xmlWebView);
+            WebSettings webSettings = widget.getSettings();
+            webSettings.setJavaScriptEnabled(true);
         }
     }
 
@@ -46,12 +49,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(RecyclerAdapter.ViewHolder holder, int pPosition) {
         final int position = pPosition;
-        holder.widget.setWebViewClient(new WebViewClient() {
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(mList.get(position));
-                return true;
-            }});
-
+        holder.widget.loadUrl(mList.get(position));
     }
 
     @Override

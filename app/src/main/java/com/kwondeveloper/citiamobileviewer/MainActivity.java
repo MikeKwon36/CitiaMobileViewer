@@ -3,6 +3,7 @@ package com.kwondeveloper.citiamobileviewer;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,19 +21,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.TextView;
 
-import java.net.URL;
+import com.firebase.client.Firebase;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private CitiaPagerAdapter mSectionsPagerAdapter;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private Toolbar mToolbar;
     private ActionBar mActionBar;
-    private FloatingActionButton mFab;
+
+    public static Citia mCitia;
     public static final String FRAGMENT_BUNDLE = "KEY";
 
     @Override
@@ -42,24 +44,16 @@ public class MainActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mViewPager = (ViewPager) findViewById(R.id.container);
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
-        mFab = (FloatingActionButton) findViewById(R.id.fab);
+        mCitia = new Citia();
 
         setSupportActionBar(mToolbar);
         mActionBar = getSupportActionBar();
         mActionBar.setTitle(getResources().getString(R.string.actionbar_title));
         mActionBar.setDefaultDisplayHomeAsUpEnabled(true);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new CitiaPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, getResources().getString(R.string.hi), Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            }
-        });
-
     }
 
     @Override
@@ -99,8 +93,13 @@ public class MainActivity extends AppCompatActivity {
             RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
             list.setLayoutManager(manager);
 
-            mList = new ArrayList<>();
-
+            if(client.equals(getResources().getString(R.string.ge))){
+                mList = mCitia.mGE;
+            } else if (client.equals(getResources().getString(R.string.viacom))){
+                mList = mCitia.mViacom;
+            } else {
+                mList = mCitia.mMastercard;
+            }
             RecyclerAdapter adapter = new RecyclerAdapter(mList);
             list.setAdapter(adapter);
 
@@ -108,15 +107,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class CitiaPagerAdapter extends FragmentStatePagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        int numOfClients = 3;
+
+        public CitiaPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
-            String client;
+            String client = "";
             switch (position) {
                 case 0:
                     client = getResources().getString(R.string.ge);
@@ -124,15 +125,11 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     client = getResources().getString(R.string.viacom);
                     break;
-                default:
-                    client = getResources().getString(R.string.ge);
+                case 2:
+                    client = getResources().getString(R.string.mastercard);
+                    break;
             }
             return PlaceholderFragment.newInstance(client);
-        }
-
-        @Override
-        public int getCount() {
-            return 2;
         }
 
         @Override
@@ -145,8 +142,16 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     title = getResources().getString(R.string.viacom);
                     return title;
+                case 2:
+                    title = getResources().getString(R.string.mastercard);
+                    return title;
             }
             return null;
+        }
+
+        @Override
+        public int getCount() {
+            return numOfClients;
         }
     }
 }
