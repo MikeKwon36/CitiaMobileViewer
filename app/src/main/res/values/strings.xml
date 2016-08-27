@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">CitiaMobileViewer</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="actionbar_title">Citia Mobile Viewer</string>
+    <string name="hi">Hi!</string>
+
+    <string name="ge">GE</string>
+    <string name="viacom">Viacom</string>
+    <string name="comcast">Comcast</string>
+    <string name="mastercard">Mastercard</string>
+</resources>
