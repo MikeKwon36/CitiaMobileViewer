@@ -12,26 +12,26 @@ public class Citia {
         mGE = new ArrayList<>();
         mViacom = new ArrayList<>();
         mMastercard = new ArrayList<>();
-        mGE.add("https://citia.com/content/organization/ge-corporate/widgets/ge-boston-bu?width=325&height=271");
-        mGE.add("https://citia.com/content/organization/ge-reports/widgets/ge-aviation?width=325&height=271");
-        mGE.add("https://citia.com/content/organization/ge-corporate/widgets/eddie-pilot?width=325&height=271");
-        mGE.add("https://citia.com/content/organization/ge-corporate/widgets/ge-2q-earnings?width=325&height=271");
-        mGE.add("https://citia.com/content/organization/ge-canada/widgets/coop-refinery-regi.2?width=325&height=271");
-        mGE.add("https://citia.com/content/organization/ge-anz/widgets/ge-energy-connecti.2?width=325&height=271");
-        mGE.add("https://citia.com/content/organization/ge-corporate/widgets/ge-europe-mindmachin?width=325&height=271");
-        mGE.add("https://citia.com/content/organization/ge-corporate/widgets/marco-annunziata-lib?width=325&height=271");
-        mGE.add("https://citia.com/content/organization/ge-reports/widgets/ge-store-ssa-widget?width=325&height=271");
-        mViacom.add("https://citia.com/content/organization/mtv/widgets/016-vma-voty-nominee?width=325&height=271");
-        mViacom.add("https://citia.com/content/organization/viacom-bet/widgets/baegoals-watch-these?width=325&height=271");
-        mViacom.add("https://citia.com/content/organization/scratch-viacom/widgets/winning-big-in-the.2?width=325&height=271");
-        mViacom.add("https://citia.com/content/organization/scratch-viacom/widgets/younger-anatomy-of-a?width=325&height=271");
-        mViacom.add("https://citia.com/content/organization/mtv/widgets/016-vma-minimalist.2?width=325&height=271");
-        mViacom.add("https://citia.com/content/organization/mtv/widgets/tattoos-every-basic?width=325&height=271");
-        mViacom.add("https://citia.com/content/organization/mtv/widgets/youre-the-daria?width=325&height=271");
-        mViacom.add("https://citia.com/content/organization/mtv/widgets/youll-never-believe?width=325&height=271");
-        mMastercard.add("https://citia.com/content/organization/mastercard/widgets/masters-of-code?width=325&height=271&cms=true");
-        mMastercard.add("https://citia.com/content/organization/mastercard/widgets/mastercard-summer-tr?width=325&height=271&cms=true");
-        mMastercard.add("https://citia.com/content/organization/mastercard/widgets/mastercard?width=325&height=271&cms=true");
+        mGE.add("https://citia.com/content/organization/ge-corporate/widgets/ge-boston-bu");
+        mGE.add("https://citia.com/content/organization/ge-reports/widgets/ge-aviation");
+        mGE.add("https://citia.com/content/organization/ge-corporate/widgets/eddie-pilot");
+        mGE.add("https://citia.com/content/organization/ge-corporate/widgets/ge-2q-earnings");
+        mGE.add("https://citia.com/content/organization/ge-canada/widgets/coop-refinery-regi.2");
+        mGE.add("https://citia.com/content/organization/ge-anz/widgets/ge-energy-connecti.2");
+        mGE.add("https://citia.com/content/organization/ge-corporate/widgets/ge-europe-mindmachin");
+        mGE.add("https://citia.com/content/organization/ge-corporate/widgets/marco-annunziata-lib");
+        mGE.add("https://citia.com/content/organization/ge-reports/widgets/ge-store-ssa-widget");
+        mViacom.add("https://citia.com/content/organization/mtv/widgets/016-vma-voty-nominee");
+        mViacom.add("https://citia.com/content/organization/viacom-bet/widgets/baegoals-watch-these");
+        mViacom.add("https://citia.com/content/organization/scratch-viacom/widgets/winning-big-in-the.2");
+        mViacom.add("https://citia.com/content/organization/scratch-viacom/widgets/younger-anatomy-of-a");
+        mViacom.add("https://citia.com/content/organization/mtv/widgets/016-vma-minimalist.2");
+        mViacom.add("https://citia.com/content/organization/mtv/widgets/tattoos-every-basic");
+        mViacom.add("https://citia.com/content/organization/mtv/widgets/youre-the-daria");
+        mViacom.add("https://citia.com/content/organization/mtv/widgets/youll-never-believe");
+        mMastercard.add("https://citia.com/content/organization/mastercard/widgets/masters-of-code");
+        mMastercard.add("https://citia.com/content/organization/mastercard/widgets/mastercard-summer-tr");
+        mMastercard.add("https://citia.com/content/organization/mastercard/widgets/mastercard");
     }
 
 }

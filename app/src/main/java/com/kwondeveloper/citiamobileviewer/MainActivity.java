@@ -31,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private CitiaPagerAdapter mSectionsPagerAdapter;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private Toolbar mToolbar;
-    private ActionBar mActionBar;
-
     public static Citia mCitia;
     public static final String FRAGMENT_BUNDLE = "KEY";
 
@@ -41,36 +38,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mViewPager = (ViewPager) findViewById(R.id.container);
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mCitia = new Citia();
-
-        setSupportActionBar(mToolbar);
-        mActionBar = getSupportActionBar();
-        mActionBar.setTitle(getResources().getString(R.string.actionbar_title));
-        mActionBar.setDefaultDisplayHomeAsUpEnabled(true);
 
         mSectionsPagerAdapter = new CitiaPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
     public static class PlaceholderFragment extends Fragment {
 
