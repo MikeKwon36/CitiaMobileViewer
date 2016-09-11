@@ -14,6 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.contentful.java.cda.CDAArray;
+import com.contentful.java.cda.CDACallback;
+import com.contentful.java.cda.CDAClient;
+import com.contentful.java.cda.CDAEntry;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private CitiaPagerAdapter mSectionsPagerAdapter;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    public static Citia mCitia;
+    public static RecyclerAdapter mAdapter;
     public static final String FRAGMENT_BUNDLE = "KEY";
 
     @Override
@@ -30,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mViewPager = (ViewPager) findViewById(R.id.container);
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
-        mCitia = new Citia();
+
+        Citia.getmInstance();
 
         mSectionsPagerAdapter = new CitiaPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -42,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         public ArrayList<String> mList;
 
         public PlaceholderFragment() {}
+
         public static PlaceholderFragment newInstance(String client) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -59,16 +66,22 @@ public class MainActivity extends AppCompatActivity {
             list.setLayoutManager(manager);
 
             if(client.equals(getResources().getString(R.string.ge))){
-                mList = mCitia.mGE;
+                mList = Citia.getmInstance().getmGE();
             } else if (client.equals(getResources().getString(R.string.viacom))){
-                mList = mCitia.mViacom;
+                mList = Citia.getmInstance().getmViacomUrls();
             } else {
-                mList = mCitia.mMastercard;
+                mList = Citia.getmInstance().getmMastercardUrls();
             }
-            RecyclerAdapter adapter = new RecyclerAdapter(mList);
-            list.setAdapter(adapter);
+            mAdapter = new RecyclerAdapter(mList);
+            list.setAdapter(mAdapter);
 
             return rootView;
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            mAdapter.notifyDataSetChanged();
         }
     }
 
