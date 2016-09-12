@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +24,22 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private CitiaPagerAdapter mSectionsPagerAdapter;
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
-    public static RecyclerAdapter mAdapter;
     public static final String FRAGMENT_BUNDLE = "KEY";
+
+    private static final String CDA_SPACE = "40ayu9gczyz8";
+    private static final String CDA_TOKEN = "9f56c5a04a2fb76dcbe1e9044c24a08a05c944a2e61ad8d9c74624bdaef97792";
+    private static final String CDA_ENTRY_ID = "jFlp5rk83m242Ou0CMgcs";
+
+    private TabLayout mTabLayout;
+    private static ViewPager mViewPager;
+    private static CitiaPagerAdapter mSectionsPagerAdapter;
+    private static CDAClient mClient;
+    private static ArrayList<String> mGe;
+    private static ArrayList<String> mViacom;
+    private static ArrayList<String> mMastercard;
+    private static RecyclerAdapter mAdapter;
+    private static ArrayList<String> mList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +47,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mViewPager = (ViewPager) findViewById(R.id.container);
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
+        mGe = new ArrayList<>();
+        mViacom = new ArrayList<>();
+        mMastercard = new ArrayList<>();
 
-        Citia.getmInstance();
-
-        mSectionsPagerAdapter = new CitiaPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
+        mClient = CDAClient.builder().setSpace(CDA_SPACE).setToken(CDA_TOKEN).build();
+        mClient.fetch(CDAEntry.class).one(CDA_ENTRY_ID, new CDACallback<CDAEntry>() {
+            @Override
+            protected void onSuccess(CDAEntry result) {
+                mGe = result.getField("ge");
+                mViacom = result.getField("viacom");
+                mMastercard = result.getField("mastercard");
+                mSectionsPagerAdapter = new CitiaPagerAdapter(getSupportFragmentManager());
+                mViewPager.setAdapter(mSectionsPagerAdapter);
+                mTabLayout.setupWithViewPager(mViewPager);
+                Log.d("***Main", "Contentful API call successful");
+                Log.d("***Main", "GE list size: " + mGe.size());
+                Log.d("***Main", "Viacom list size: " + mViacom.size());
+                Log.d("***Main", "Mastercard list size: " + mMastercard.size());
+            }
+        });
     }
 
     public static class PlaceholderFragment extends Fragment {
-
-        public ArrayList<String> mList;
+        public RecyclerView mRecycler;
+        public RecyclerView.LayoutManager mManager;
 
         public PlaceholderFragment() {}
 
@@ -61,27 +87,24 @@ public class MainActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             String client = getArguments().getString(FRAGMENT_BUNDLE);
-            RecyclerView list = (RecyclerView) rootView.findViewById(R.id.xmlRecyclerView);
-            RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
-            list.setLayoutManager(manager);
+            mRecycler = (RecyclerView) rootView.findViewById(R.id.xmlRecyclerView);
+            mManager = new LinearLayoutManager(getContext());
+            mRecycler.setLayoutManager(mManager);
 
             if(client.equals(getResources().getString(R.string.ge))){
-                mList = Citia.getmInstance().getmGE();
+                mList = mGe;
+                Log.d("***Main", "GE fragment built");
             } else if (client.equals(getResources().getString(R.string.viacom))){
-                mList = Citia.getmInstance().getmViacomUrls();
+                mList = mViacom;
+                Log.d("***Main", "Viacom fragment built");
             } else {
-                mList = Citia.getmInstance().getmMastercardUrls();
+                mList = mMastercard;
+                Log.d("***Main", "Mastercard fragment built");
             }
             mAdapter = new RecyclerAdapter(mList);
-            list.setAdapter(mAdapter);
+            mRecycler.setAdapter(mAdapter);
 
             return rootView;
-        }
-
-        @Override
-        public void onResume() {
-            super.onResume();
-            mAdapter.notifyDataSetChanged();
         }
     }
 
